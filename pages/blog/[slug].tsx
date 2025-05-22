@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerComponentClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
