@@ -5,16 +5,16 @@ import { useUser } from '@/hooks/useUser'
 import AdminSidebar from './AdminSidebar'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { user, isAdmin, Loading } = useUser()
+  const { user, isAdmin, loading } = useUser()
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoading && (!user || !isAdmin)) {
+    if (!loading && (!user || !isAdmin)) {
       router.push('/login')
     }
-  }, [user, isAdmin, isLoading])
+  }, [user, isAdmin, loading, router])
 
-  if (isLoading) return <div>Loading...</div>
+  if (loading) return <div>Loading...</div>
 
   return (
     <div className="flex h-screen bg-secondary-50">
