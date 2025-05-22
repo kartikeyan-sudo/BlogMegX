@@ -1,5 +1,5 @@
 import type { AppProps } from 'next/app'
-import { createBrowserClient, SessionContextProvider } from '@supabase/ssr'
+import { createBrowserClient, SessionContextProvider } from '@supabase/auth-helpers-nextjs'
 import { useState } from 'react'
 import MainLayout from '@/components/layout/MainLayout'
 import '@/styles/globals.css'
