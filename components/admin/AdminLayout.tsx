@@ -5,7 +5,7 @@ import { useUser } from '@/hooks/useUser'
 import AdminSidebar from './AdminSidebar'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { user, isAdmin, isLoading } = useUser()
+  const { user, isAdmin, Loading } = useUser()
   const router = useRouter()
 
   useEffect(() => {
