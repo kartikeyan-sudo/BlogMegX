@@ -1,61 +1,38 @@
 import { useEffect, useState } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { useRouter } from 'next/router'
+import { User } from '@supabase/auth-helpers-nextjs'
 
 export function useUser() {
-  const [user, setUser] = useState<any>(null)
-  const [isAdmin, setIsAdmin] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
   const supabase = createClientComponentClient()
 
   useEffect(() => {
+    // Get initial session
     const getUser = async () => {
-      try {
-        const { data: { session }, error } = await supabase.auth.getSession()
-        
-        if (error) throw error
-        
-        if (session?.user) {
-          const { data: userData } = await supabase
-            .from('users')
-            .select('*')
-            .eq('id', session.user.id)
-            .single()
+      const { data: { session } } = await supabase.auth.getSession()
+      setUser(session?.user ?? null)
+      setLoading(false)
 
-          setUser(userData)
-          setIsAdmin(userData?.role === 'ADMIN')
+      // Listen for changes
+      const { data: { subscription } } = await supabase.auth.onAuthStateChange(
+        (_event, session) => {
+          setUser(session?.user ?? null)
+          setLoading(false)
         }
-      } catch (error) {
-        console.error('Error:', error)
-      } finally {
-        setIsLoading(false)
+      )
+
+      return () => {
+        subscription.unsubscribe()
       }
     }
 
     getUser()
+  }, [])
 
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN') {
-        const { data: userData } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', session?.user.id)
-          .single()
-
-        setUser(userData)
-        setIsAdmin(userData?.role === 'ADMIN')
-      } else if (event === 'SIGNED_OUT') {
-        setUser(null)
-        setIsAdmin(false)
-        router.push('/')
-      }
-    })
-
-    return () => {
-      authListener.subscription.unsubscribe()
-    }
-  }, [supabase, router])
-
-  return { user, isAdmin, isLoading }
+  return {
+    user,
+    loading,
+    isAdmin: user?.user_metadata?.role === 'ADMIN',
+  }
 }
