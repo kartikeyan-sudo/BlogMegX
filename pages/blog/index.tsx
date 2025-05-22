@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { GetServerSideProps } from 'next'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerComponentClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { motion } from 'framer-motion'
 import BlogCard from '@/components/blog/BlogCard'
