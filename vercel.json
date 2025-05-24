@@ -1,11 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run vercel-build",
   "installCommand": "npm install",
-  "framework": "nextjs",
-  "env": {
-    "DATABASE_URL": "postgresql://postgres:Gorakhpur@123#@db.kdlwxtjtonjckrtaepdr.supabase.co:5432/postgres",
-    "NEXT_PUBLIC_SUPABASE_URL": "https://kdlwxtjtonjckrtaepdr.supabase.co",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkbHd4dGp0b25qY2tydGFlcGRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc3ODc3MDUsImV4cCI6MjA2MzM2MzcwNX0.cRVcQkinNEkCLkFFdFnodu62P-8VGQSDbi17zkgMyY4"
-  }
+  "framework": "nextjs"
 }
